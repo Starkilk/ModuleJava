@@ -37,7 +37,6 @@ public class Money {
 
         //округляем в большую или в меньшую сторону
         thisMoney = this.amount.setScale(4,RoundingMode.HALF_UP);
-
         objectMoney = object.amount.setScale(4,RoundingMode.HALF_UP);
 
 
