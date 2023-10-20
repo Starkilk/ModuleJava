@@ -30,30 +30,16 @@ public class Money {
         if(o == null || getClass() != o.getClass())return false;//проверка является ли объект экземпляром класса Money
 
         Money object = (Money) o;//поняли, что объект это экземпляр Money и привели тип
-        //получили float значения двух объектов
-        float floatValueThis = this.amount.floatValue();
-        float floatValueObject = object.amount.floatValue();
-
-        //получили 4ую цифру поле запятой
-        int digitThis = (int) (floatValueThis * 10000) % 10;
-        int digitObject = (int) (floatValueObject * 10000) % 10;
 
         //объекты, в которые поместим округлённые значения
         BigDecimal thisMoney;
         BigDecimal objectMoney;
 
         //округляем в большую или в меньшую сторону
-        if(digitThis >= 5){
-            thisMoney = this.amount.setScale(4,RoundingMode.HALF_UP);
-        }else{
-            thisMoney = this.amount.setScale(4,RoundingMode.HALF_DOWN);
-        }
+        thisMoney = this.amount.setScale(4,RoundingMode.HALF_UP);
 
-        if(digitObject >= 5){
-            objectMoney = this.amount.setScale(4,RoundingMode.HALF_UP);
-        }else{
-            objectMoney = this.amount.setScale(4,RoundingMode.HALF_DOWN);
-        }
+        objectMoney = object.amount.setScale(4,RoundingMode.HALF_UP);
+
 
         return thisMoney.equals(objectMoney);
     }
