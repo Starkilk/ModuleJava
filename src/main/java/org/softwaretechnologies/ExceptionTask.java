@@ -1,4 +1,4 @@
-package org.softwaretechnologies;;
+package org.softwaretechnologies;
 
 import java.util.Optional;
 
@@ -10,7 +10,7 @@ public class ExceptionTask {
      */
     public static void printMessage() {
         throwRuntimeException();
-        // TODO: реализуйте вышеуказанную функцию
+        System.out.println("Вызвана функция printMessage");
 
     }
 
@@ -21,7 +21,8 @@ public class ExceptionTask {
      */
     public static void printMessage2() throws Exception {
         throwCatchableException();
-        // TODO: реализуйте вышеуказанную функцию
+        System.out.println("Вызвана функция printMessage2");
+
     }
 
     private static void throwCatchableException() throws Exception {
