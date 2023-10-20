@@ -26,14 +26,41 @@ public class Money {
      */
     @Override
     public boolean equals(Object o) {
-        // TODO: реализуйте вышеуказанную функцию
+        if(this == o) return true;//если один и тоже объект
+        if(o == null || getClass() != o.getClass())return false;//проверка является ли объект экземпляром класса Money
 
-        return false;
+        Money object = (Money) o;//поняли, что объект это экземпляр Money и привели тип
+        //получили float значения двух объектов
+        float floatValueThis = this.amount.floatValue();
+        float floatValueObject = object.amount.floatValue();
+
+        //получили 4ую цифру поле запятой
+        int digitThis = (int) (floatValueThis * 10000) % 10;
+        int digitObject = (int) (floatValueObject * 10000) % 10;
+
+        //объекты, в которые поместим округлённые значения
+        BigDecimal thisMoney;
+        BigDecimal objectMoney;
+
+        //округляем в большую или в меньшую сторону
+        if(digitThis >= 5){
+            thisMoney = this.amount.setScale(4,RoundingMode.HALF_UP);
+        }else{
+            thisMoney = this.amount.setScale(4,RoundingMode.HALF_DOWN);
+        }
+
+        if(digitObject >= 5){
+            objectMoney = this.amount.setScale(4,RoundingMode.HALF_UP);
+        }else{
+            objectMoney = this.amount.setScale(4,RoundingMode.HALF_DOWN);
+        }
+
+        return thisMoney.equals(objectMoney);
     }
 
     /**
      * Формула:
-     * (Если amount null 10000, иначе количество денег окрукленные до 4х знаков * 10000) + :
+     * (Если amount null, то 10000, иначе количество денег окрукленные до 4х знаков * 10000) + :
      * если USD , то 1
      * если EURO, то 2
      * если RUB, то 3
@@ -74,9 +101,36 @@ public class Money {
      */
     @Override
     public String toString() {
-        // TODO: реализуйте вышеуказанную функцию
-        String str = type.toString()+": "+amount.setScale(4, RoundingMode.HALF_UP).toString();
-        return str;
+        if(type == null && amount == null){
+            return "null: null";
+        }
+        //получили float значение объекта
+        float floatValue = amount.floatValue();
+        //получили 4ую цифру после запятой
+        int digit = (int)(floatValue * 10000) % 10;
+
+        //если тип валюты равен ничему
+        if(type == null){
+            if(digit >= 5){
+                return "null: " + amount.setScale(4, RoundingMode.HALF_UP);
+            }else {
+                return "null: " + amount.setScale(4, RoundingMode.HALF_DOWN);
+            }
+        }
+
+        //если количество денег не указано
+        if(amount == null){
+            return type + ": null";
+        }
+
+        //если указан тип и количество
+        String string;
+        if(digit >= 5){
+            string = type+": "+amount.setScale(4,RoundingMode.HALF_UP);
+        }else {
+            string = type+": "+amount.setScale(4,RoundingMode.HALF_DOWN);
+        }
+        return string;
     }
 
     public BigDecimal getAmount() {
