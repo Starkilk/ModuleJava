@@ -31,21 +31,18 @@ public class Money {
 
         Money object = (Money) o;//поняли, что объект это экземпляр Money и привели тип
 
-        //объекты, в которые поместим округлённые значения
-        BigDecimal thisMoney;
-        BigDecimal objectMoney;
-
         //округляем в большую или в меньшую сторону
-        thisMoney = this.amount.setScale(4,RoundingMode.HALF_UP);
-        objectMoney = object.amount.setScale(4,RoundingMode.HALF_UP);
+        BigDecimal thisMoney = this.amount.setScale(4,RoundingMode.HALF_UP);
+        BigDecimal objectMoney = object.amount.setScale(4,RoundingMode.HALF_UP);
+
+        return thisMoney.equals(objectMoney) && this.type == object.type;
 
 
-        return thisMoney.equals(objectMoney);
     }
 
     /**
      * Формула:
-     * (Если amount null, то 10000, иначе количество денег окрукленные до 4х знаков * 10000) + :
+     * (Если amount null, то hashCode = 10000, иначе количество денег окрукленные до 4х знаков * 10000) + :
      * если USD , то 1
      * если EURO, то 2
      * если RUB, то 3
@@ -60,11 +57,30 @@ public class Money {
      */
     @Override
     public int hashCode() {
-        // TODO: реализуйте вышеуказанную функцию
+        if(amount == null)return 10000;
+
+        BigDecimal money = this.amount.setScale(4,RoundingMode.HALF_UP);
+        BigDecimal moneyMaxValue = money;
+
+        moneyMaxValue = money.multiply(BigDecimal.valueOf(10_000));
+        money = money.multiply(BigDecimal.valueOf(10_000));
+        switch (type){
+            case RUB -> money = money.multiply(BigDecimal.valueOf(3));
+            case USD -> money = money.multiply(BigDecimal.valueOf(1));
+            case EURO -> money = money.multiply(BigDecimal.valueOf(2));
+            case KRONA -> money = money.multiply(BigDecimal.valueOf(4));
+            default -> money = money.multiply(BigDecimal.valueOf(5));
+        }
 
 
-        Random random = new Random();
-        return random.nextInt();
+        int res = moneyMaxValue.compareTo(BigDecimal.valueOf(MAX_VALUE-5));
+        if(res > 0 || res == 0){
+            return MAX_VALUE;
+        }
+
+        return  money.intValue();
+
+
     }
 
     /**
@@ -89,18 +105,11 @@ public class Money {
         if(type == null && amount == null){
             return "null: null";
         }
-        //получили float значение объекта
-        float floatValue = amount.floatValue();
-        //получили 4ую цифру после запятой
-        int digit = (int)(floatValue * 10000) % 10;
+
 
         //если тип валюты равен ничему
         if(type == null){
-            if(digit >= 5){
-                return "null: " + amount.setScale(4, RoundingMode.HALF_UP);
-            }else {
-                return "null: " + amount.setScale(4, RoundingMode.HALF_DOWN);
-            }
+            return "null: " + amount.setScale(4, RoundingMode.HALF_UP);
         }
 
         //если количество денег не указано
@@ -109,13 +118,7 @@ public class Money {
         }
 
         //если указан тип и количество
-        String string;
-        if(digit >= 5){
-            string = type+": "+amount.setScale(4,RoundingMode.HALF_UP);
-        }else {
-            string = type+": "+amount.setScale(4,RoundingMode.HALF_DOWN);
-        }
-        return string;
+        return type+": "+amount.setScale(4,RoundingMode.HALF_UP);
     }
 
     public BigDecimal getAmount() {
