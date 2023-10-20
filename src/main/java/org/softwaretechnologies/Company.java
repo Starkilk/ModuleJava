@@ -22,7 +22,7 @@ public class Company {
      * @param type тип работника
      */
     public void addEmployee(String name, int baseSalary, EmployeeType type) {
-        // TODO: реализуйте вышеуказанную функцию
+
 
     }
 
