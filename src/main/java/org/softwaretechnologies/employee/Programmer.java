@@ -7,6 +7,6 @@ public class Programmer extends Employee{
 
     @Override
     public int getMonthSalary(int month) {
-        return 0;
+        return baseSalary;
     }
 }

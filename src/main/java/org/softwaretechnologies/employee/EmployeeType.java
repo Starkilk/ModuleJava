@@ -11,7 +11,7 @@ public enum EmployeeType {
     Формула вычисления зп: если месяц четный, то baseSalary, иначе baseSalary/2
      */
     Manager{
-
+        
     },
 
     /*

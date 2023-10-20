@@ -1,5 +1,8 @@
 package org.softwaretechnologies.employee;
 
+import java.time.LocalDate;
+import java.time.YearMonth;
+
 public class Tester extends Employee{
     protected Tester(String name, int baseSalary) {
         super(name, baseSalary);
@@ -7,6 +10,6 @@ public class Tester extends Employee{
 
     @Override
     public int getMonthSalary(int month) {
-        return 0;
+        return baseSalary * YearMonth.of(LocalDate.now().getYear(), month).lengthOfMonth();
     }
 }
