@@ -1,7 +1,6 @@
 package org.softwaretechnologies;
 
-import org.softwaretechnologies.employee.Employee;
-import org.softwaretechnologies.employee.EmployeeType;
+import org.softwaretechnologies.employee.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,20 @@ public class Company {
      * @param type тип работника
      */
     public void addEmployee(String name, int baseSalary, EmployeeType type) {
+        if(type == EmployeeType.Manager){
+            Employee employee = new Manager(name,baseSalary);
+            employeeList.add(employee);
+        }
 
+        if(type == EmployeeType.Programmer){
+            Employee employee = new Programmer(name,baseSalary);
+            employeeList.add(employee);
+        }
+
+        if(type == EmployeeType.Tester){
+            Employee employee = new Tester(name,baseSalary);
+            employeeList.add(employee);
+        }
 
     }
 
@@ -32,9 +44,12 @@ public class Company {
      * @return сумма зарплат всех сотрудников за указанный месяц
      */
     public int getMonthSalary(int month) {
-        // TODO: реализуйте вышеуказанную функцию
+        int counter = 0;
+        for(Employee employee : employeeList){
+            counter += employee.getMonthSalary(month);
+        }
 
-        return 0;
+        return counter;
     }
 
     public String getName() {
