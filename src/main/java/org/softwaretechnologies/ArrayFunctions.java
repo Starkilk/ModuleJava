@@ -10,7 +10,15 @@ public final class ArrayFunctions {
      * @param array массив, который будет перевернут.
      */
     public static void reverse(int[] array) {
-        // TODO: реализуйте вышеуказанную функцию
+        int start = 0;
+        int end = array.length - 1;
+        while (start < end) {
+            int temp = array[start];
+            array[start] = array[end];
+            array[end] = temp;
+            start++;
+            end--;
+        }
     }
 
     /**
@@ -24,6 +32,20 @@ public final class ArrayFunctions {
      * @param matrix матрица, в которой столбцы будут заменены на строки.
      */
     public static void rotateMatrix(int[][] matrix) {
-        // TODO: реализуйте вышеуказанную функцию
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+
+        if(rows != cols) {
+            System.out.println("Матрица не квадратная!");
+            return;
+        }
+
+        for(int i = 0;i<rows;i++){
+            for(int j = i+1;j<cols;j++){
+                int temp = matrix[i][j];
+                matrix[i][j] = matrix[j][i];
+                matrix[j][i] = temp;
+            }
+        }
     }
 }
