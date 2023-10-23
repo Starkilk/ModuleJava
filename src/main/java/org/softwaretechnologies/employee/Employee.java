@@ -21,4 +21,8 @@ public abstract class Employee {
     public String getName() {
         return name;
     }
+
+    public int getBaseSalary() {
+        return baseSalary;
+    }
 }

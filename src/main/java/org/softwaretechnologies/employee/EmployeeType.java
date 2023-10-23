@@ -11,14 +11,7 @@ public enum EmployeeType {
     Формула вычисления зп: если месяц четный, то baseSalary, иначе baseSalary/2
      */
     Manager{
-        @Override
-        public int getMonthSalary(int month) {
-            if (month % 2 == 0) {
-                return baseSalary;
-            } else {
-                return baseSalary / 2;
-            }
-        }
+
     },
 
     /*
@@ -41,12 +34,12 @@ public enum EmployeeType {
         }
     };
 
-    protected int baseSalary;
+    /*protected int baseSalary;
 
     public void setBaseSalary(int baseSalary) {
         this.baseSalary = baseSalary;
     }
 
-    public abstract int getMonthSalary(int month);
+    public abstract int getMonthSalary(int month);*/
 
 }
