@@ -7,9 +7,8 @@ public class Programmer extends Employee{
         super(name, baseSalary);
     }
 
-
     @Override
     public int getMonthSalary(int month) {
-        return EmployeeType.Programmer.getMonthSalary(month);
+        return baseSalary;
     }
 }

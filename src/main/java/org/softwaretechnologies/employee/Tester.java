@@ -10,6 +10,6 @@ public class Tester extends Employee{
 
     @Override
     public int getMonthSalary(int month) {
-        return EmployeeType.Tester.getMonthSalary(month);
+        return baseSalary * YearMonth.of(LocalDate.now().getYear(), month).lengthOfMonth();
     }
 }

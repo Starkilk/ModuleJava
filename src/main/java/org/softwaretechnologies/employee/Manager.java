@@ -9,6 +9,10 @@ public class Manager extends Employee{
 
     @Override
     public int getMonthSalary(int month) {
-        return EmployeeType.Manager.getMonthSalary(month);
+        if(month % 2 == 0){
+            return baseSalary;
+        }else{
+            return baseSalary / 2;
+        }
     }
 }

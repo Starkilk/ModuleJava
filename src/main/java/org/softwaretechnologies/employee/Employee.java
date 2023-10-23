@@ -22,7 +22,5 @@ public abstract class Employee {
         return name;
     }
 
-    public int getBaseSalary() {
-        return baseSalary;
-    }
+
 }

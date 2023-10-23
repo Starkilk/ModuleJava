@@ -18,20 +18,14 @@ public enum EmployeeType {
     Формула вычисления зп: всегда baseSalary
      */
     Programmer{
-        @Override
-        public int getMonthSalary(int month) {
-            return baseSalary;
-        }
+
     },
     /*
     Формула вычисления зп: baseSalary * количество дней в месяце в текущем году
     Вычисление количества дней в месяце: YearMonth.of(LocalDate.now().getYear(), month).lengthOfMonth()
      */
     Tester{
-        @Override
-        public int getMonthSalary(int month) {
-            return baseSalary * YearMonth.of(LocalDate.now().getYear(), month).lengthOfMonth();
-        }
+
     };
 
     /*protected int baseSalary;
