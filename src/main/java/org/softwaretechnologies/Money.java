@@ -57,10 +57,10 @@ public class Money {
      */
     @Override
     public int hashCode() {
-        if(amount == null)return 10000;
+        if(this.amount == null)return 10000;
 
         BigDecimal money = this.amount.setScale(4,RoundingMode.HALF_UP);
-        BigDecimal moneyMaxValue = money;
+        BigDecimal moneyMaxValue;
 
         moneyMaxValue = money.multiply(BigDecimal.valueOf(10_000));
         money = money.multiply(BigDecimal.valueOf(10_000));
