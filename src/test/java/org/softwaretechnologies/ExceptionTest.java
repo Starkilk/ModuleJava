@@ -13,28 +13,28 @@ public class ExceptionTest {
     public void test1() {
         int x = 1000;
         try {
-            throw new NullPointerException();
+            throw new NullPointerException();//выбрасываем исключение
         } catch (NullPointerException e) {
             x += 1;
-        } catch (Exception e) {
+        } catch (Exception e) {//не выполниться так как ловим NullPointerException
             x += 20;
-        } finally {
+        } finally {//finally говорит о том, что код выполнится в любом случае
             x += 300;
         }
-        assertEquals(1000, x);
+        assertEquals(1301, x);//проверка: равен ли x 1301у
     }
 
     @Test
     public void test2() {
         int x = 1000;
         try {
-            throw new NullPointerException();
+            throw new NullPointerException();//выбрасываем исключение
         } catch (NullPointerException  e) {
             x += 2;
-        } catch (Exception e) {
+        } catch (Exception e) {//не выполниться так как ловим NullPointerException
             x += 10;
         }
-        assertEquals(1000, x);
+        assertEquals(1002, x);
     }
 
     @Test
@@ -44,10 +44,10 @@ public class ExceptionTest {
             throw new FileNotFoundException();
         } catch (RuntimeException e) {
             x = 1;
-        } catch (Exception e) {
+        } catch (Exception e) {//выполнится это, тк FileNotFoundException является подтипом Exception
             x = 2;
         }
-        assertEquals(0, x);
+        assertEquals(2, x);
     }
 
     @Test
@@ -55,12 +55,12 @@ public class ExceptionTest {
         int x = 0;
         try {
             throw new NullPointerException();
-        } catch (NullPointerException e) {
+        } catch (NullPointerException e) {//вы
             x = 1;
-        } catch (Exception e) {
+        } catch (Exception e) {//NullPointerException не является подтипом Exception
             x = 2;
         }
-        assertEquals(0, x);
+        assertEquals(1, x);
     }
 
     @Test
@@ -69,38 +69,40 @@ public class ExceptionTest {
         try {
             try {
                 throw new Exception();
-            } catch (Exception e) {
+            } catch (Exception e) {//ловим ошибку, выполняем код
                 x += 10;
             }
-        } catch (NullPointerException e) {
+        }
+        //2 catch не сработают, тк на из уровне не было ошибки
+        catch (NullPointerException e) {
             x += 200;
         } catch (Exception e) {
             x += 3000;
         } finally {
-            x += 400;
+            x += 400;//выполняется тк finally
         }
-        assertEquals(0, x);
+        assertEquals(410, x);
     }
 
     String s = "";
     void f() throws Exception {
         try {
-            s += "a";
+            s += "a";//просто выполняется
             throw new Exception();
         } catch (Exception e) {
             throw e;
         } finally {
-            s += "b";
+            s += "b";//выполняется тк finally
         }
     }
 
     @Test
     public void test6() {
         try {
-            f();
-        } catch (Exception e) {
-            s += "c";
+            f();//функция сработала, записала в s "ab"
+        } catch (Exception e) {//словило Exception в этой функции
+            s += "c";//выполнило код
         }
-        assertEquals("xxxx", s);
+        assertEquals("abc", s);
     }
 }
